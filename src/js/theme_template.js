@@ -16,7 +16,8 @@
     var updatedThemeStyles = initialThemeStyles;
 
     if (!disableGlow) {
-      /* replace neon red */
+      /* replace orange */
+      /*updatedThemeStyles = updatedThemeStyles.replace(/color: #ecc48d;/g, "color: #ecc48d; text-shadow: 0 0 2px #eecea1, 0 0 3px #ebd1ad[NEON_BRIGHTNESS], 0 0 5px #f3e8d9[NEON_BRIGHTNESS];"); */
       updatedThemeStyles = updatedThemeStyles.replace(/color: #d64a53;/g, "color: #ff3341; text-shadow: 0 0 2px #ff4a00, 0 0 3px #fc1f2c[NEON_BRIGHTNESS], 0 0 5px #fc1f2c[NEON_BRIGHTNESS];");
 
       /* replace yellow */
@@ -30,6 +31,9 @@
 
       /* replace periwinkle */
       updatedThemeStyles = updatedThemeStyles.replace(/color: #82AAFF;/g, "color: #82AAFF; text-shadow: 0 0 2px #001716, 0 0 3px #3370f3[NEON_BRIGHTNESS], 0 0 5px #4e83f5[NEON_BRIGHTNESS], 0 0 8px #8badf5[NEON_BRIGHTNESS];");
+
+      /* UPDATED replace light grey */
+      //updatedThemeStyles = updatedThemeStyles.replace(/color: #d6deeb;/g, "color: #d6deeb; text-shadow: 0 0 2px #001716, 0 0 3px #d6deeb[NEON_BRIGHTNESS], 0 0 5px #d6deeb[NEON_BRIGHTNESS], 0 0 8px #d6deeb[NEON_BRIGHTNESS];");
     }
 
     /* append the remaining styles */
@@ -40,7 +44,7 @@
     newStyleTag.innerText = updatedThemeStyles.replace(/(\r\n|\n|\r)/gm, '');
     document.body.appendChild(newStyleTag);
 
-    console.log('Party Owl \'84: Party Lights initialised!');
+    console.log('Party Owl \'84: Party Lights initialized!');
 
     // disconnect the observer because we don't need it anymore
     if (obs) {
