@@ -8,7 +8,7 @@
   "icon": "icon.png",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sabrsorensen/partyowl-vscode"
+    "url": "https://github.com/sabrsorensen/partyowl84-vscode-theme"
   },
   "engines": {
     "vscode": "^1.33.0"
