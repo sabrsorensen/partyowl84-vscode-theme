@@ -68,9 +68,7 @@
   "dependencies": {
     "semver": "^7.1.1"
   },
-  "__metadata": {
-    "id": "e8b3816e-3e89-4e64-820b-20a292d37b5f",
-    "publisherId": "8428dd13-8e68-4aea-ab06-2bfd684c11f7",
-    "publisherDisplayName": "sabrsorensen"
+  "scripts": {
+    "deploy": "vsce publish --yarn"
   }
 }
