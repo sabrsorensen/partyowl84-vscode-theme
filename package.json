@@ -5,7 +5,6 @@
   "version": "0.0.3",
   "author": "Sam Sorensen",
   "publisher": "sabrsorensen",
-  "icon": "icon.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/sabrsorensen/partyowl84-vscode-theme"
