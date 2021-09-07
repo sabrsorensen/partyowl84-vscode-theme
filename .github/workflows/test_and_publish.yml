@@ -5,10 +5,7 @@ on:
 
 jobs:
   build:
-    strategy:
-      matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -20,6 +17,9 @@ jobs:
 
       - name: Install vsce
         run: npm install -g vsce
+
+      - name: Install dependencies
+        run: npm install
 
       - name: Publish Theme
         run: vsce publish --pat ${{ secrets.VSCE_PAT }}
