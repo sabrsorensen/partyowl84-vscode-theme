@@ -207,9 +207,6 @@
     "gitDecoration.untrackedResourceForeground": "#c5e478ff",
     "gitDecoration.ignoredResourceForeground": "#395a75",
     "gitDecoration.conflictingResourceForeground": "#ffeb95cc",
-    "source.elm": "#5f7e97",
-    "string.quoted.single.js": "#ffffff",
-    "meta.objectliteral.js": "#82AAFF"
   },
   "tokenColors": [
     {
@@ -390,7 +387,7 @@
         "meta.class entity.name.type.class"
       ],
       "settings": {
-        "foreground": "#ffcb8b"
+        "foreground": "#57eaf1"
       }
     },
     {
@@ -995,7 +992,7 @@
         "storage.type.cs"
       ],
       "settings": {
-        "foreground": "#ffcb8b"
+        "foreground": "#57eaf1"
       }
     },
     {
@@ -1020,7 +1017,7 @@
         "keyword.preprocessor.endregion.cs"
       ],
       "settings": {
-        "foreground": "#ffcb8b",
+        "foreground": "#57eaf1",
         "fontStyle": "bold"
       }
     },
@@ -1236,7 +1233,7 @@
         "variable.parameter"
       ],
       "settings": {
-        "foreground": "#ffcb8b"
+        "foreground": "#57eaf1"
       }
     },
     {
