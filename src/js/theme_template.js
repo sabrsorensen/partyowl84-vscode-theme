@@ -39,6 +39,9 @@
 
       /* replace teal */
       updatedThemeStyles = updatedThemeStyles.replace(/color: #57eaf1;/g, "color: #3fe7ef; text-shadow: 0 0 2px #100c0f, 0 0 5px #57eaf1[NEON_BRIGHTNESS], 0 0 8px #86f0f5[NEON_BRIGHTNESS];");
+
+      /* replace purple */
+      updatedThemeStyles = updatedThemeStyles.replace(/color: #5b36ff;/g, "color: #5636ff; text-shadow: 0 0 2px #100c0f, 0 0 5px #7050ff[NEON_BRIGHTNESS], 0 0 8px #9982ff[NEON_BRIGHTNESS];");
     }
 
     /* append the remaining styles */
