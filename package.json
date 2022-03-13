@@ -1,73 +1,73 @@
 {
-  "name": "party-owl-84",
-  "displayName": "Party Owl '84",
-  "description": "sdras' Night Owl given Robb0wen's SynthWave '84 Neon Dreams treatment",
-  "version": "0.0.4",
-  "author": "Sam Sorensen",
-  "publisher": "sabrsorensen",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/sabrsorensen/partyowl84-vscode-theme"
-  },
-  "engines": {
-    "vscode": "^1.33.0"
-  },
-  "keywords": [
-    "retro",
-    "80s",
-    "synthwave",
-    "night owl",
-    "night",
-    "owl",
-    "party",
-    "party owl"
-  ],
-  "categories": [
-    "Themes"
-  ],
-  "activationEvents": [
-    "*",
-    "onCommand:partyowl84.enableNeon"
-  ],
-  "main": "./src/extension.js",
-  "contributes": {
-    "themes": [
-      {
-        "label": "Party Owl '84",
-        "uiTheme": "vs-dark",
-        "path": "./themes/Night Owl-color-theme.json"
-      }
+    "name": "party-owl-84",
+    "displayName": "Party Owl '84",
+    "description": "sdras' Night Owl given Robb0wen's SynthWave '84 Neon Dreams treatment",
+    "version": "0.0.5",
+    "author": "Sam Sorensen",
+    "publisher": "sabrsorensen",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/sabrsorensen/partyowl84-vscode-theme"
+    },
+    "engines": {
+        "vscode": "^1.33.0"
+    },
+    "keywords": [
+        "retro",
+        "80s",
+        "synthwave",
+        "night owl",
+        "night",
+        "owl",
+        "party",
+        "party owl"
     ],
-    "commands": [
-      {
-        "command": "partyowl84.enableNeon",
-        "title": "Party Owl '84: Enable Party Glow"
-      },
-      {
-        "command": "partyowl84.disableNeon",
-        "title": "Party Owl '84: Disable Party Glow"
-      }
+    "categories": [
+        "Themes"
     ],
-    "configuration": {
-      "title": "Party Owl '84",
-      "properties": {
-        "partyowl84.brightness": {
-          "type": "number",
-          "default": 0.45,
-          "description": "Set the brightness value for the glow effect. 0.0 is fully transparent and 1.0 is fully bright"
-        },
-        "partyowl84.disableGlow": {
-          "type": "boolean",
-          "default": false,
-          "description": "Disable the glow effect, but show Party Owl '84 editor chrome updates"
+    "activationEvents": [
+        "*",
+        "onCommand:partyowl84.enableNeon"
+    ],
+    "main": "./src/extension.js",
+    "contributes": {
+        "themes": [
+            {
+                "label": "Party Owl '84",
+                "uiTheme": "vs-dark",
+                "path": "./themes/Night Owl-color-theme.json"
+            }
+        ],
+        "commands": [
+            {
+                "command": "partyowl84.enableNeon",
+                "title": "Party Owl '84: Enable Party Glow"
+            },
+            {
+                "command": "partyowl84.disableNeon",
+                "title": "Party Owl '84: Disable Party Glow"
+            }
+        ],
+        "configuration": {
+            "title": "Party Owl '84",
+            "properties": {
+                "partyowl84.brightness": {
+                    "type": "number",
+                    "default": 0.45,
+                    "description": "Set the brightness value for the glow effect. 0.0 is fully transparent and 1.0 is fully bright"
+                },
+                "partyowl84.disableGlow": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Disable the glow effect, but show Party Owl '84 editor chrome updates"
+                }
+            }
         }
-      }
+    },
+    "dependencies": {
+        "semver": "^7.1.1"
+    },
+    "scripts": {
+        "deploy": "vsce publish --yarn"
     }
-  },
-  "dependencies": {
-    "semver": "^7.1.1"
-  },
-  "scripts": {
-    "deploy": "vsce publish --yarn"
-  }
 }
