@@ -2,7 +2,7 @@
     "name": "party-owl-84",
     "displayName": "Party Owl '84",
     "description": "sdras' Night Owl given Robb0wen's SynthWave '84 Neon Dreams treatment",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "author": "Sam Sorensen",
     "publisher": "sabrsorensen",
     "repository": {
@@ -26,8 +26,9 @@
         "Themes"
     ],
     "activationEvents": [
-        "*",
-        "onCommand:partyowl84.enableNeon"
+
+        "onCommand:partyowl84.enableNeon",
+        "onCommand:partyowl84.disableNeon"
     ],
     "main": "./src/extension.js",
     "contributes": {
