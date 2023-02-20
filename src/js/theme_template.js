@@ -58,7 +58,7 @@
    */
   const usingPartyOwl = () => {
     const appliedTheme = document.querySelector('[class*="theme-json"]');
-    const partyOwlTheme = document.querySelector('[class*="sabrsorensen-partyowl84-themes"]');
+    const partyOwlTheme = document.querySelector('[class*="sabrsorensen-party-owl-84-themes"]');
     return appliedTheme && partyOwlTheme;
   }
 
