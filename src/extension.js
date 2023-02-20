@@ -21,7 +21,7 @@ function activate(context) {
 	const parsedBrightness = Math.floor(brightness * 255).toString(16).toUpperCase();
 	let neonBrightness = parsedBrightness;
 
-	let disposable = vscode.commands.registerCommand('partyowl84.enableNeon', function () {
+	let disposable = vscode.commands.registerCommand('partyowl84.enablePartyLights', function () {
 
 		const isWin = /^win/.test(process.platform);
 		const appDir = path.dirname(require.main.filename);
@@ -91,7 +91,7 @@ function activate(context) {
 		}
 	});
 
-	let disable = vscode.commands.registerCommand('partyowl84.disableNeon', uninstall);
+	let disable = vscode.commands.registerCommand('partyowl84.disablePartyLights', uninstall);
 
 	context.subscriptions.push(disposable);
 	context.subscriptions.push(disable);

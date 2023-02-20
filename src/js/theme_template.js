@@ -3,13 +3,13 @@
   // Theme replacement CSS (Glow styles)
   //====================================
   const tokenReplacements = {
-    
+
       /* replace orange */
       /*'ecc48d': "color: #ecc48d; text-shadow: 0 0 2px #eecea1, 0 0 3px #ebd1ad[NEON_BRIGHTNESS], 0 0 5px #f3e8d9[NEON_BRIGHTNESS]; backface-visibility: hidden;", */
       /* replace red */
-      'd64a53': "color: #ff3341; text-shadow: 0 0 2px #ff4a00, 0 0 3px #fc1f2c[NEON_BRIGHTNESS], 0 0 5px #fc1f2c[NEON_BRIGHTNESS]; backface-visibility: hidden;",
+      /*'d64a53': "color: #ff3341; text-shadow: 0 0 2px #ff4a00, 0 0 3px #fc1f2c[NEON_BRIGHTNESS], 0 0 5px #fc1f2c[NEON_BRIGHTNESS]; backface-visibility: hidden;",*/
       /* replace yellow */
-      'fede5d': "color: #f9faaa; text-shadow: 0 0 2px #f9faaa, 0 0 3px #f39f05[NEON_BRIGHTNESS], 0 0 5px #f39f05[NEON_BRIGHTNESS], 0 0 8px #f39f05[NEON_BRIGHTNESS]; backface-visibility: hidden;",
+      /*'fede5d': "color: #f9faaa; text-shadow: 0 0 2px #f9faaa, 0 0 3px #f39f05[NEON_BRIGHTNESS], 0 0 5px #f39f05[NEON_BRIGHTNESS], 0 0 8px #f39f05[NEON_BRIGHTNESS]; backface-visibility: hidden;",*/
       /* replace green */
       '7fdbca': "color: #7fdbca; text-shadow: 0 0 2px #100c0f, 0 0 5px #17f1c9[NEON_BRIGHTNESS], 0 0 8px #52e6cb[NEON_BRIGHTNESS]; backface-visibility: hidden;",
       /* replace pink */
@@ -58,7 +58,7 @@
    */
   const usingPartyOwl = () => {
     const appliedTheme = document.querySelector('[class*="theme-json"]');
-    const partyOwlTheme = document.querySelector('[class*="sabrsorensen-party-owl-84-themes"]');
+    const partyOwlTheme = document.querySelector('[class*="sabrsorensen-partyowl84-themes"]');
     return appliedTheme && partyOwlTheme;
   }
 
@@ -82,7 +82,7 @@
    * @param {boolean} disableGlow
    * @param {MutationObserver} obs
    */
-  const initNeonDreams = (disableGlow, obs) => {
+  const initPartyLights = (disableGlow, obs) => {
     const tokensEl = document.querySelector('.vscode-tokens-styles');
 
     if (!tokensEl || !readyForReplacement(tokensEl, tokenReplacements)) {
@@ -103,9 +103,9 @@
     newStyleTag.setAttribute("id", "partyowl84-theme-styles");
     newStyleTag.innerText = updatedThemeStyles.replace(/(\r\n|\n|\r)/gm, '');
     document.body.appendChild(newStyleTag);
-    
+
     console.log('Party Owl \'84: Party Lights initialized!');
-    
+
     // disconnect the observer because we don't need it anymore
     if (obs) {
       obs.disconnect();
@@ -123,7 +123,7 @@
         const tokensEl = document.querySelector('.vscode-tokens-styles');
         if (readyForReplacement(tokensEl, tokenReplacements)) {
           // If everything we need is ready, then initialise
-          initNeonDreams([DISABLE_GLOW], observer);
+          initPartyLights([DISABLE_GLOW], observer);
         } else {
           // sometimes VS code takes a while to init the styles content, so if there stop this observer and add an observer for that
           observer.disconnect();
@@ -134,7 +134,7 @@
         const tokensEl = document.querySelector('.vscode-tokens-styles');
         if (readyForReplacement(tokensEl, tokenReplacements)) {
           // Everything we need should be ready now, so initialise
-          initNeonDreams([DISABLE_GLOW], observer);
+          initPartyLights([DISABLE_GLOW], observer);
         }
       }
     }
