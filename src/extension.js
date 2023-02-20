@@ -9,11 +9,11 @@ const diff = require('semver/functions/diff');
 function activate(context) {
 	this.extensionName = 'sabrsorensen.partyowl84';
 	this.cntx = context;
-	
+
 	const config = vscode.workspace.getConfiguration("partyowl84");
 
 	let disableGlow = config && config.disableGlow ? !!config.disableGlow : false;
-	
+
 	let brightness = parseFloat(config.brightness) > 1 ? 1 : parseFloat(config.brightness);
 	brightness = brightness < 0 ? 0 : brightness;
 	brightness = isNaN(brightness) ? 0.45 : brightness;
@@ -21,7 +21,7 @@ function activate(context) {
 	const parsedBrightness = Math.floor(brightness * 255).toString(16).toUpperCase();
 	let neonBrightness = parsedBrightness;
 
-	let disposable = vscode.commands.registerCommand('partyowl84.enableNeon', function () {
+	let disposable = vscode.commands.registerCommand('partyowl84.enablePartyLights', function () {
 
 		const isWin = /^win/.test(process.platform);
 		const appDir = path.dirname(require.main.filename);
@@ -51,7 +51,7 @@ function activate(context) {
 			const themeWithChrome = themeWithGlow.replace(/\[CHROME_STYLES\]/g, chromeStyles);
 			const finalTheme = themeWithChrome.replace(/\[NEON_BRIGHTNESS\]/g, neonBrightness);
 			fs.writeFileSync(templateFile, finalTheme, "utf-8");
-			
+
 			// modify workbench html
 			const html = fs.readFileSync(htmlFile, "utf-8");
 
@@ -64,9 +64,9 @@ function activate(context) {
 				// add script tag
 				output = html.replace(/\<\/html\>/g, `	<!-- PARTY OWL 84 --><script src="partylights.js"></script><!-- PARTY OWL 84 -->\n`);
 				output += '</html>';
-	
+
 				fs.writeFileSync(htmlFile, output, "utf-8");
-				
+
 				vscode.window
 					.showInformationMessage("Party Lights enabled. VS code must reload for this change to take effect. Code may display a warning that it is corrupted, this is normal. You can dismiss this message by choosing 'Don't show this again' on the notification.", { title: "Restart editor to complete" })
 					.then(function(msg) {
@@ -91,8 +91,8 @@ function activate(context) {
 		}
 	});
 
-	let disable = vscode.commands.registerCommand('partyowl84.disableNeon', uninstall);
-	
+	let disable = vscode.commands.registerCommand('partyowl84.disablePartyLights', uninstall);
+
 	context.subscriptions.push(disposable);
 	context.subscriptions.push(disable);
 }
@@ -142,7 +142,7 @@ function isVSCodeBelowVersion(version) {
 	const vscodeVersion = vscode.version;
 	const vscodeVersionArray = vscodeVersion.split('.');
 	const versionArray = version.split('.');
-	
+
 	for (let i = 0; i < versionArray.length; i++) {
 		if (vscodeVersionArray[i] < versionArray[i]) {
 			return true;
