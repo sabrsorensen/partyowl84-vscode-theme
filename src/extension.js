@@ -24,15 +24,16 @@ function activate(context) {
 	let disposable = vscode.commands.registerCommand('partyowl84.enablePartyLights', function () {
 
 		const isWin = /^win/.test(process.platform);
-		const appDir = path.dirname(require.main.filename);
+		const appDir = `${path.dirname(vscode.env.appRoot)}/app/out`;
 		const base = appDir + (isWin ? "\\vs\\code" : "/vs/code");
 		const electronBase = isVSCodeBelowVersion("1.70.0") ? "electron-browser" : "electron-sandbox";
+		const htmlFileName = (isVSCodeBelowVersion("1.94.0") || !isVSCodeBelowVersion("1.95.0")) ? "workbench.html" : "workbench.esm.html";
 
 		const htmlFile =
 			base +
 			(isWin
-				? "\\"+electronBase+"\\workbench\\workbench.html"
-				: "/"+electronBase+"/workbench/workbench.html");
+				? "\\"+electronBase+"\\workbench\\"+htmlFileName
+				: "/"+electronBase+"/workbench/"+htmlFileName);
 
 		const templateFile =
 				base +
@@ -105,15 +106,16 @@ function deactivate() {
 
 function uninstall() {
 	var isWin = /^win/.test(process.platform);
-	var appDir = path.dirname(require.main.filename);
+	var appDir = `${path.dirname(vscode.env.appRoot)}/app/out`;
 	var base = appDir + (isWin ? "\\vs\\code" : "/vs/code");
 	var electronBase = isVSCodeBelowVersion("1.70.0") ? "electron-browser" : "electron-sandbox";
+	var htmlFileName = (isVSCodeBelowVersion("1.94.0") || !isVSCodeBelowVersion("1.95.0")) ? "workbench.html" : "workbench.esm.html";
 
 	var htmlFile =
 		base +
 		(isWin
-			? "\\"+electronBase+"\\workbench\\workbench.html"
-			: "/"+electronBase+"/workbench/workbench.html");
+			? "\\"+electronBase+"\\workbench\\"+htmlFileName
+			: "/"+electronBase+"/workbench/"+htmlFileName);
 
 	// modify workbench html
 	const html = fs.readFileSync(htmlFile, "utf-8");
