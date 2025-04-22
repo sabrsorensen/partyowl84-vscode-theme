@@ -1,7 +1,6 @@
 const path = require('path');
 const fs = require('fs');
 const vscode = require('vscode');
-const diff = require('semver/functions/diff');
 
 /**
  * @param {vscode.ExtensionContext} context
@@ -23,31 +22,21 @@ function activate(context) {
 
 	let disposable = vscode.commands.registerCommand('partyowl84.enablePartyLights', function () {
 
-		const isWin = /^win/.test(process.platform);
-		const appDir = `${path.dirname(vscode.env.appRoot)}/app/out`;
-		const base = appDir + (isWin ? "\\vs\\code" : "/vs/code");
+		const appDir = path.dirname(vscode.env.appRoot);
+		const base = path.join(appDir, 'app', 'out', 'vs', 'code');
 		const electronBase = isVSCodeBelowVersion("1.70.0") ? "electron-browser" : "electron-sandbox";
-		const htmlFileName = (isVSCodeBelowVersion("1.94.0") || !isVSCodeBelowVersion("1.95.0")) ? "workbench.html" : "workbench.esm.html";
+		const workBenchFilename = vscode.version == "1.94.0" ? "workbench.esm.html" : "workbench.html";
 
-		const htmlFile =
-			base +
-			(isWin
-				? "\\"+electronBase+"\\workbench\\"+htmlFileName
-				: "/"+electronBase+"/workbench/"+htmlFileName);
-
-		const templateFile =
-				base +
-				(isWin
-					? "\\"+electronBase+"\\workbench\\partylights.js"
-					: "/"+electronBase+"/workbench/partylights.js");
+		const htmlFile = path.join(base, electronBase, "workbench", workBenchFilename);
+		const templateFile = path.join(base, electronBase, "workbench", "partylights.js");
 
 		try {
 
 			// const version = context.globalState.get(`${context.extensionName}.version`);
 
 			// generate production theme JS
-			const chromeStyles = fs.readFileSync(__dirname +'/css/editor_chrome.css', 'utf-8');
-			const jsTemplate = fs.readFileSync(__dirname +'/js/theme_template.js', 'utf-8');
+			const chromeStyles = fs.readFileSync(__dirname + '/css/editor_chrome.css', 'utf-8');
+			const jsTemplate = fs.readFileSync(__dirname + '/js/theme_template.js', 'utf-8');
 			const themeWithGlow = jsTemplate.replace(/\[DISABLE_GLOW\]/g, disableGlow);
 			const themeWithChrome = themeWithGlow.replace(/\[CHROME_STYLES\]/g, chromeStyles);
 			const finalTheme = themeWithChrome.replace(/\[NEON_BRIGHTNESS\]/g, neonBrightness);
@@ -105,17 +94,12 @@ function deactivate() {
 }
 
 function uninstall() {
-	var isWin = /^win/.test(process.platform);
-	var appDir = `${path.dirname(vscode.env.appRoot)}/app/out`;
-	var base = appDir + (isWin ? "\\vs\\code" : "/vs/code");
-	var electronBase = isVSCodeBelowVersion("1.70.0") ? "electron-browser" : "electron-sandbox";
-	var htmlFileName = (isVSCodeBelowVersion("1.94.0") || !isVSCodeBelowVersion("1.95.0")) ? "workbench.html" : "workbench.esm.html";
+	const appDir = path.dirname(vscode.env.appRoot);
+	const base = path.join(appDir, 'app', 'out', 'vs', 'code');
+	const electronBase = isVSCodeBelowVersion("1.70.0") ? "electron-browser" : "electron-sandbox";
+	const workBenchFilename = vscode.version == "1.94.0" ? "workbench.esm.html" : "workbench.html";
 
-	var htmlFile =
-		base +
-		(isWin
-			? "\\"+electronBase+"\\workbench\\"+htmlFileName
-			: "/"+electronBase+"/workbench/"+htmlFileName);
+	const htmlFile = path.join(base, electronBase, "workbench", workBenchFilename);
 
 	// modify workbench html
 	const html = fs.readFileSync(htmlFile, "utf-8");
