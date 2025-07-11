@@ -24,7 +24,7 @@ function activate(context) {
 
 		const appDir = path.dirname(vscode.env.appRoot);
 		const base = path.join(appDir, 'app', 'out', 'vs', 'code');
-		const electronBase = isVSCodeBelowVersion("1.70.0") ? "electron-browser" : "electron-sandbox";
+		const electronBase = isVSCodeBelowVersion("1.70.0") || isVSCodeAboveVersion("1.102.0") ? "electron-browser" : "electron-sandbox";
 		const workBenchFilename = vscode.version == "1.94.0" ? "workbench.esm.html" : "workbench.html";
 
 		const htmlFile = path.join(base, electronBase, "workbench", workBenchFilename);
@@ -96,7 +96,7 @@ function deactivate() {
 function uninstall() {
 	const appDir = path.dirname(vscode.env.appRoot);
 	const base = path.join(appDir, 'app', 'out', 'vs', 'code');
-	const electronBase = isVSCodeBelowVersion("1.70.0") ? "electron-browser" : "electron-sandbox";
+	const electronBase = isVSCodeBelowVersion("1.70.0") || isVSCodeAboveVersion("1.102.0") ? "electron-browser" : "electron-sandbox";
 	const workBenchFilename = vscode.version == "1.94.0" ? "workbench.esm.html" : "workbench.html";
 
 	const htmlFile = path.join(base, electronBase, "workbench", workBenchFilename);
@@ -140,6 +140,31 @@ function isVSCodeBelowVersion(version) {
 		}
 
 		if (vscodePart >= versionPart) {
+			return false;
+		}
+	}
+
+	return false;
+}
+
+// Returns true if the VS Code version running this extension is below the
+// version specified in the "version" parameter. Otherwise returns false.
+function isVSCodeAboveVersion(version) {
+	const vscodeVersion = vscode.version;
+	const vscodeVersionArray = vscodeVersion.split('.').map(Number);
+	const versionArray = version.split('.').map(Number);
+
+	const len = Math.max(vscodeVersionArray.length, versionArray.length);
+
+	for (let i = 0; i < len; i++) {
+		const vscodePart = vscodeVersionArray[i] ?? 0;
+		const versionPart = versionArray[i] ?? 0;
+
+		if (vscodePart >= versionPart) {
+			return true;
+		}
+
+		if (vscodePart < versionPart) {
 			return false;
 		}
 	}
