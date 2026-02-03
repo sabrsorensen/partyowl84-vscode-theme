@@ -4,24 +4,26 @@
   //====================================
   const tokenReplacements = {
 
-      /* replace orange */
-      /*'ecc48d': "color: #ecc48d; text-shadow: 0 0 2px #eecea1, 0 0 3px #ebd1ad[NEON_BRIGHTNESS], 0 0 5px #f3e8d9[NEON_BRIGHTNESS]; backface-visibility: hidden;", */
-      /* replace red */
-      /*'d64a53': "color: #ff3341; text-shadow: 0 0 2px #ff4a00, 0 0 3px #fc1f2c[NEON_BRIGHTNESS], 0 0 5px #fc1f2c[NEON_BRIGHTNESS]; backface-visibility: hidden;",*/
-      /* replace yellow */
-      /*'fede5d': "color: #f9faaa; text-shadow: 0 0 2px #f9faaa, 0 0 3px #f39f05[NEON_BRIGHTNESS], 0 0 5px #f39f05[NEON_BRIGHTNESS], 0 0 8px #f39f05[NEON_BRIGHTNESS]; backface-visibility: hidden;",*/
-      /* replace green */
+      /* replace green/cyan - operators, keywords, JSON props */
       '7fdbca': "color: #7fdbca; text-shadow: 0 0 2px #100c0f, 0 0 5px #17f1c9[NEON_BRIGHTNESS], 0 0 8px #52e6cb[NEON_BRIGHTNESS]; backface-visibility: hidden;",
-      /* replace pink */
+      /* replace pink/magenta - keywords, storage types */
       'c792ea': "color: #c792ea; text-shadow: 0 0 2px #001716, 0 0 3px #ae46f3[NEON_BRIGHTNESS], 0 0 5px #ba6eec[NEON_BRIGHTNESS], 0 0 8px #c792ea[NEON_BRIGHTNESS]; backface-visibility: hidden;",
-      /* replace periwinkle */
+      /* replace periwinkle - functions, constants */
       '82aaff': "color: #82aaff; text-shadow: 0 0 2px #001716, 0 0 3px #3370f3[NEON_BRIGHTNESS], 0 0 5px #4e83f5[NEON_BRIGHTNESS], 0 0 8px #8badf5[NEON_BRIGHTNESS]; backface-visibility: hidden;",
-      /* UPDATED replace light grey */
-      /*'d6deeb': "color: #d6deeb; text-shadow: 0 0 2px #001716, 0 0 3px #d6deeb[NEON_BRIGHTNESS], 0 0 5px #d6deeb[NEON_BRIGHTNESS], 0 0 8px #d6deeb[NEON_BRIGHTNESS]; backface-visibility: hidden;", */
-      /* replace teal */
+      /* replace teal - variables, classes */
       '57eaf1': "color: #3fe7ef; text-shadow: 0 0 2px #100c0f, 0 0 5px #57eaf1[NEON_BRIGHTNESS], 0 0 8px #86f0f5[NEON_BRIGHTNESS]; backface-visibility: hidden;",
-      /* replace purple */
-      '5b36ff': "color: #5636ff; text-shadow: 0 0 2px #100c0f, 0 0 5px #7050ff[NEON_BRIGHTNESS], 0 0 8px #9982ff[NEON_BRIGHTNESS]; backface-visibility: hidden;"
+      /* replace deep purple - Go variables */
+      '5b36ff': "color: #5636ff; text-shadow: 0 0 2px #100c0f, 0 0 5px #7050ff[NEON_BRIGHTNESS], 0 0 8px #9982ff[NEON_BRIGHTNESS]; backface-visibility: hidden;",
+      /* replace orange - numbers, escape chars, custom tags */
+      'f78c6c': "color: #f78c6c; text-shadow: 0 0 2px #100c0f, 0 0 5px #f7652a[NEON_BRIGHTNESS], 0 0 8px #f9a26c[NEON_BRIGHTNESS]; backface-visibility: hidden;",
+      /* replace hot pink - booleans, null, language constants */
+      'ff5874': "color: #ff5874; text-shadow: 0 0 2px #100c0f, 0 0 5px #ff2d56[NEON_BRIGHTNESS], 0 0 8px #ff6b8a[NEON_BRIGHTNESS]; backface-visibility: hidden;",
+      /* replace lime green - tag attributes, decorators, inherited class */
+      'c5e478': "color: #c5e478; text-shadow: 0 0 2px #100c0f, 0 0 5px #a3d629[NEON_BRIGHTNESS], 0 0 8px #c5e478[NEON_BRIGHTNESS]; backface-visibility: hidden;",
+      /* replace warm orange - string quoted */
+      'ecc48d': "color: #ecc48d; text-shadow: 0 0 2px #100c0f, 0 0 3px #e8a540[NEON_BRIGHTNESS], 0 0 5px #ecc48d[NEON_BRIGHTNESS]; backface-visibility: hidden;",
+      /* replace warm gold - JS/TS class names, Dart */
+      'ffcb8b': "color: #ffcb8b; text-shadow: 0 0 2px #100c0f, 0 0 5px #ffb347[NEON_BRIGHTNESS], 0 0 8px #ffd68a[NEON_BRIGHTNESS]; backface-visibility: hidden;"
 };
 
   //=============================

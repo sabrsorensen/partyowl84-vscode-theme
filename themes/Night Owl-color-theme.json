@@ -257,7 +257,7 @@
       "name": "String",
       "scope": "string",
       "settings": {
-        "foreground": "#eecea1"
+        "foreground": "#21c7a8"
       }
     },
     {
@@ -267,7 +267,7 @@
         "variable.other.readwrite.js"
       ],
       "settings": {
-        "foreground": "#ecc48d"
+        "foreground": "#21c7a8"
       }
     },
     {

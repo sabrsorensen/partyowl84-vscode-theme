@@ -1,5 +1,6 @@
 # Party Owl '84 - VS Code theme
-![Party Owl](./icon.png)
+
+[![Party Owl](./icon.png)](https://isidorbobinec.bandcamp.com/track/neon-owl)
 
 ![Neon glowing text](./theme.png)
 
@@ -72,3 +73,67 @@ Standing on the shoulders of giants, this wouldn't be possible without Robb0wen'
 > Similarly, I'd like to thanks [Wes Bos](https://twitter.com/wesbos) for his [cool Cobalt2 theme](https://github.com/wesbos/cobalt2-vscode). His readme helped me figure out how to package this hot mess for public use 👍
 
 > If this theme is too much, then I recommend [Horizon](https://github.com/jolaleye/horizon-theme-vscode), or [City Lights](http://citylights.xyz/) for a similar, yet more understated, retro vibe. They're both beautiful.
+
+### Nix Flake Installation (Baked-in Theme)
+
+This repository also provides VS Code with the Party Owl '84 theme baked directly into the application, eliminating the need for manual extension installation or patching.
+
+#### Quick Start
+
+```bash
+# Run directly from GitHub
+nix run github:sabrsorensen/partyowl84-vscode-theme
+
+# Or build and run locally
+nix build
+./result/bin/code
+```
+
+#### Using as a Flake Input
+
+Add to your `flake.nix`:
+
+```nix
+{
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    party-owl-vscode.url = "github:sabrsorensen/partyowl84-vscode-theme";
+  };
+
+  outputs = { self, nixpkgs, party-owl-vscode }:
+    let
+      system = "x86_64-linux";
+      pkgs = nixpkgs.legacyPackages.${system};
+    in {
+      # Use in NixOS configuration
+      nixosConfigurations.myhost = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          {
+            environment.systemPackages = [
+              party-owl-vscode.packages.${system}.vscode-partyowl84
+            ];
+          }
+        ];
+      };
+
+      # Use in Home Manager
+      homeConfigurations.myuser = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        modules = [
+          {
+            home.packages = [
+              party-owl-vscode.packages.${system}.vscode-partyowl84
+            ];
+          }
+        ];
+      };
+    };
+}
+```
+
+#### Available Packages
+
+- `default` - Build the .vsix extension file
+- `extension` - Same as default
+- `vscode-partyowl84` - VS Code with Party Owl '84 theme baked-in

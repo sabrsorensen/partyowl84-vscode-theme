@@ -1,0 +1,87 @@
+diff --git i/src/js/theme_template.js w/src/js/theme_template.js
+index e86bdb4..3106357 100755
+--- i/src/js/theme_template.js
++++ w/src/js/theme_template.js
+@@ -59,9 +59,24 @@
+    * @returns {boolean}
+    */
+   const usingPartyOwl = () => {
++    // Check for our baked-in theme, extension theme, or any party-owl-related theme
+     const appliedTheme = document.querySelector('[class*="theme-json"]');
+-    const partyOwlTheme = document.querySelector('[class*="sabrsorensen-party-owl-84-themes"]');
+-    return appliedTheme && partyOwlTheme;
++    const partyOwlTheme = document.querySelector('[class*="sabrsorensen-party-owl-84-themes"]') ||
++                          document.querySelector('[class*="party-owl"]') ||
++                          document.querySelector('[class*="Party-Owl"]') ||
++                          document.querySelector('[class*="partyowl"]') ||
++                          document.querySelector('[class*="PartyOwl"]');
++
++    // Also check the body class and workbench theme attribute for baked-in themes
++    const bodyTheme = document.body.className.toLowerCase().includes('party') ||
++                      document.body.className.toLowerCase().includes('owl') ||
++                      document.body.className.toLowerCase().includes('neon') ||
++                      document.body.className.toLowerCase().includes('glow');
++
++    // For non-Nix extension use, be more permissive with theme detection
++    const hasAppliedTheme = appliedTheme || document.querySelector('.monaco-workbench');
++
++    return hasAppliedTheme && (partyOwlTheme || bodyTheme);
+   }
+ 
+   /**
+@@ -79,12 +94,35 @@
+     )
+     : false;
+ 
++  /**
++   * @summary Get VS Code settings (compatible with both extension and baked-in versions)
++   * @returns {object}
++   */
++  const getSettings = () => {
++    // For extension version, try to get settings from VS Code API
++    try {
++      if (typeof acquireVsCodeApi !== 'undefined') {
++        const vscode = acquireVsCodeApi();
++        // Extension can access workspace configuration
++        // For now, use build-time defaults since webview settings access is complex
++      }
++    } catch (e) {
++      // Settings API not available, use defaults
++    }
++
++    // Default settings - these will be replaced at build time for baked-in version
++    return {
++      disableGlow: [DISABLE_GLOW],
++      brightness: parseFloat('[NEON_BRIGHTNESS]') / 255 || 0.45
++    };
++  };
++
+   /**
+    * @summary Attempts to bootstrap the theme
+-   * @param {boolean} disableGlow
+    * @param {MutationObserver} obs
+    */
+-  const initPartyLights = (disableGlow, obs) => {
++  const initPartyLights = (obs) => {
++    const settings = getSettings();
+     const tokensEl = document.querySelector('.vscode-tokens-styles');
+ 
+     if (!tokensEl || !readyForReplacement(tokensEl, tokenReplacements)) {
+@@ -96,7 +134,7 @@
+       const initialThemeStyles = tokensEl.innerText;
+ 
+       // Replace tokens with glow styles
+-      let updatedThemeStyles = !disableGlow
++      let updatedThemeStyles = !settings.disableGlow
+         ? replaceTokens(initialThemeStyles, tokenReplacements)
+         : initialThemeStyles;
+ 
+@@ -128,7 +166,7 @@
+         const tokensEl = document.querySelector('.vscode-tokens-styles');
+         if (readyForReplacement(tokensEl, tokenReplacements)) {
+           // If everything we need is ready, then initialise
+-          initPartyLights([DISABLE_GLOW], observer);
++          initPartyLights(observer);
+         } else {
+           if (tokensEl) {
+             // sometimes VS code takes a while to init the styles content, so if there stop this observer and add an observer for that
