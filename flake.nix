@@ -28,10 +28,18 @@
         extensionName = "partyowl84";
         extensionVersion = packageJson.version;
 
+        # Vendor npm dependencies for reproducible builds
+        npmDeps = pkgs.fetchNpmDeps {
+          name = "partyowl84-npm-deps";
+          src = ./.;
+          hash = "sha256-pRhxA8oFzhWZfGA2HAJP+Y0YhFC87eGfOacRHPbPOGE=";
+        };
+
         # Only include files needed for the build — excludes .git, build artifacts, etc.
         src = pkgs.lib.fileset.toSource {
           root = ./.;
           fileset = pkgs.lib.fileset.unions [
+            ./.vscodeignore
             ./src
             ./themes
             ./icon.png
@@ -40,6 +48,7 @@
             ./LICENSE
           ];
         };
+
         bakedSrc = src // pkgs.lib.fileset.toSource {
           root = ./.;
           fileset = pkgs.lib.fileset.unions [
@@ -53,14 +62,18 @@
           pname = "${extensionName}-vscode-extension";
           version = extensionVersion;
 
-          inherit src;
+          inherit src npmDeps;
 
           nativeBuildInputs = with pkgs; [ nodejs nodePackages.npm vsce ];
 
           buildPhase = ''
+            # Use vendored node_modules for reproducible builds
+            if [ -d "$npmDeps" ]; then
+              cp -r $npmDeps node_modules
+            fi
             # Install dependencies if needed (no-op if none)
             if [ -f package.json ]; then
-              npm install --ignore-scripts --no-audit --no-fund || true
+              npm install --offline --ignore-scripts --no-audit --no-fund || true
             fi
             # Package the extension as .vsix
             vsce package --no-git-tag-version --skip-license --no-update-package-json --allow-star-activation --no-dependencies --out partyowl84.vsix
