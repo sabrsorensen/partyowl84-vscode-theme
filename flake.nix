@@ -23,8 +23,18 @@
         };
         pkgs = pkgsAllowUnfree;
 
+        renderTemplate =
+          template: vars:
+          let
+            names = builtins.attrNames vars;
+          in
+          pkgs.lib.replaceStrings
+            (map (name: "@${name}@") names)
+            (map (name: builtins.toString vars.${name}) names)
+            (builtins.readFile template);
+
         # Extension metadata
-        packageJson = builtins.fromJSON (builtins.readFile "${./.}/package.json");
+        packageJson = builtins.fromJSON (builtins.readFile ./package.json);
         extensionName = "partyowl84";
         extensionVersion = packageJson.version;
 
@@ -84,42 +94,48 @@
           '';
         };
 
-        # Pre-patched VS Code with Party Owl '84 theme built-in
-        party-owl-vscode = pkgs.vscode.overrideAttrs (oldAttrs: {
-          pname = "vscode-${extensionName}";
-          version = "${oldAttrs.version}-vsc-${extensionVersion}-po84";
-          __intentionallyOverridingVersion = true;
+        mkBakedEditor =
+          basePackage: productName: versionTag:
+          basePackage.overrideAttrs (oldAttrs: {
+            pname = "${productName}-${extensionName}";
+            version = "${oldAttrs.version}-${versionTag}-${extensionVersion}-po84";
+            __intentionallyOverridingVersion = true;
 
-          inherit bakedSrc;
+            inherit bakedSrc;
 
-          buildInputs = (oldAttrs.buildInputs or []) ++ [ pkgs.jq pkgs.openssl ];
+            buildInputs = (oldAttrs.buildInputs or [ ]) ++ [ pkgs.jq pkgs.openssl ];
 
-          installPhase = (oldAttrs.installPhase or "") + (builtins.readFile (pkgs.replaceVars ./scripts/inject-theme.sh {
-            PARTY_OWL_EXTENSION = party-owl-extension;
-            EXTENSION_NAME = extensionName;
-            PATCHES_DIR = "${self}/patches";
-            PATCH_BIN = "${pkgs.patch}/bin/patch";
-            JQ_BIN = "${pkgs.jq}/bin/jq";
-          }));
+            installPhase = (oldAttrs.installPhase or "") + (renderTemplate ./scripts/inject-theme.sh {
+              PARTY_OWL_EXTENSION = party-owl-extension;
+              EXTENSION_NAME = extensionName;
+              PATCHES_DIR = "${self}/patches";
+              PATCH_BIN = "${pkgs.patch}/bin/patch";
+              JQ_BIN = "${pkgs.jq}/bin/jq";
+            });
 
-          # Fix wrapGAppsHook unbound variable bug - initialize to empty so hook can run normally
-          # Hook will respect dontWrapGApps=true and skip wrapping while avoiding [ -z "$var" ] error
-          preFixup = ''
-            wrapGAppsHookHasRun=""
-          '' + (oldAttrs.preFixup or "");
+            # Fix wrapGAppsHook unbound variable bug - initialize to empty so hook can run normally
+            # Hook will respect dontWrapGApps=true and skip wrapping while avoiding [ -z "$var" ] error
+            preFixup = ''
+              wrapGAppsHookHasRun=""
+            '' + (oldAttrs.preFixup or "");
 
-          # Recalculate checksums in postFixup
-          postFixup = (oldAttrs.postFixup or "") + (builtins.readFile (pkgs.replaceVars ./scripts/update-checksums.sh {
-            JQ_BIN = "${pkgs.jq}/bin/jq";
-            OPENSSL_BIN = "${pkgs.openssl}/bin/openssl";
-          }));
-        });
+            # Recalculate checksums in postFixup
+            postFixup = (oldAttrs.postFixup or "") + (renderTemplate ./scripts/update-checksums.sh {
+              JQ_BIN = "${pkgs.jq}/bin/jq";
+              OPENSSL_BIN = "${pkgs.openssl}/bin/openssl";
+            });
+          });
+
+        # Pre-patched editors with Party Owl '84 theme built-in
+        party-owl-vscode = mkBakedEditor pkgs.vscode "vscode" "vsc";
+        party-owl-vscodium = mkBakedEditor pkgs.vscodium "vscodium" "codium";
 
       in {
         packages = {
           default = party-owl-extension;
           extension = party-owl-extension;
           vscode-partyowl84 = party-owl-vscode;
+          vscodium-partyowl84 = party-owl-vscodium;
         };
 
         devShells.default =
@@ -132,11 +148,27 @@
           package-extension = {
             type = "app";
             program = "${pkgs.writeShellScript "package-${extensionName}" ''
-              export PATH="${pkgs.nodejs}/bin:${pkgs.nodePackages.npm}/bin:${pkgs.vsce}/bin:$PATH"
+              export PATH="${pkgs.nodejs}/bin:${pkgs.vsce}/bin:$PATH"
               ${pkgs.vsce}/bin/vsce package --no-git-tag-version --skip-license --no-update-package-json --allow-star-activation --no-dependencies --allow-package-all-secrets
             ''}";
             meta = {
               description = "Package Party Owl 84 VS Code theme extension as .vsix file";
+              license = nixpkgs.lib.licenses.mit;
+            };
+          };
+          baked-vscode = {
+            type = "app";
+            program = "${party-owl-vscode}/bin/code";
+            meta = {
+              description = "Launch VS Code with Party Owl '84 theme baked-in";
+              license = nixpkgs.lib.licenses.mit;
+            };
+          };
+          baked-vscodium = {
+            type = "app";
+            program = "${party-owl-vscodium}/bin/codium";
+            meta = {
+              description = "Launch VSCodium with Party Owl '84 theme baked-in";
               license = nixpkgs.lib.licenses.mit;
             };
           };
